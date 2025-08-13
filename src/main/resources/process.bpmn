@@ -1,37 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:process id="camunda-app-om-process" isExecutable="true" camunda:historyTimeToLive="180">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0dznbmp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="process-logger" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0efmzic</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="say-hello" />
-    <bpmn:endEvent id="EndEvent_0x6ir2l">
-      <bpmn:incoming>SequenceFlow_16gzt2m</bpmn:incoming>
+    <bpmn:sequenceFlow id="Flow_0efmzic" sourceRef="StartEvent_1" targetRef="Activity_0piy41b" />
+    <bpmn:endEvent id="Event_024kuye">
+      <bpmn:incoming>Flow_1wyqspk</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="say-hello" targetRef="EndEvent_0x6ir2l" />
-    <bpmn:userTask id="say-hello" name="Say hello to&#10;demo" camunda:candidateUsers="demo">
-      <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_16gzt2m</bpmn:outgoing>
-    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1wyqspk" sourceRef="Activity_0piy41b" targetRef="Event_024kuye" />
+    <bpmn:serviceTask id="Activity_0piy41b" name="Application Variable Logger" camunda:delegateExpression="${applicationLoggerService}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="userDetails">
+            <camunda:script scriptFormat="javascript">var userDetails = {
+    id:243234,
+    name:"Om Prakash",
+    gender:"Male",
+    address:{
+        city:"Delhi",
+        area:"Local",
+        pin:"118880"
+    },
+    phone:"+91-8293848920",
+    dob:"dd/mm/yyyy",
+    age:10,
+}
+
+JSON.stringify(userDetails);</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="applicationName">
+            <camunda:script scriptFormat="javascript">var appliation = "Loan Approval Workflow";
+appliation;</camunda:script>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="loanAmount">
+            <camunda:script scriptFormat="javascript">var loan = 1000;
+loan;</camunda:script>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0efmzic</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wyqspk</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:textAnnotation id="TextAnnotation_0gdowrt">
+      <bpmn:text>Logs the submitted variables</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0wyh9u1" sourceRef="Activity_0piy41b" targetRef="TextAnnotation_0gdowrt" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="camunda-app-om-process">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="99" width="36" height="36" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-logger">
+      <bpmndi:BPMNShape id="TextAnnotation_0gdowrt_di" bpmnElement="TextAnnotation_0gdowrt">
+        <dc:Bounds x="310" y="50" width="120" height="43" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l">
-        <dc:Bounds x="432" y="99" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_08mft2c_di" bpmnElement="say-hello">
-        <dc:Bounds x="270" y="77" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+      <bpmndi:BPMNEdge id="Flow_0efmzic_di" bpmnElement="Flow_0efmzic">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="280" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_16gzt2m_di" bpmnElement="SequenceFlow_16gzt2m">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="432" y="117" />
+      <bpmndi:BPMNEdge id="Flow_1wyqspk_di" bpmnElement="Flow_1wyqspk">
+        <di:waypoint x="380" y="177" />
+        <di:waypoint x="452" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_024kuye_di" bpmnElement="Event_024kuye">
+        <dc:Bounds x="452" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1btlv42_di" bpmnElement="Activity_0piy41b">
+        <dc:Bounds x="280" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0wyh9u1_di" bpmnElement="Association_0wyh9u1">
+        <di:waypoint x="341" y="137" />
+        <di:waypoint x="353" y="93" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
